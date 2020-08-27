@@ -14,10 +14,10 @@ using System.Web.Http;
 
 namespace SilvaGunnerPokemon
 {
-    public static class rebuild_video_list
-    {
+	public static class rebuild_video_list
+	{
 
-        private static string YouTubeToken = Environment.GetEnvironmentVariable("YouTubeToken");
+		private static string YouTubeToken = Environment.GetEnvironmentVariable("YouTubeToken");
 
 		public static List<string> GetVideos()
 		{
@@ -57,21 +57,21 @@ namespace SilvaGunnerPokemon
 		}
 
 		[FunctionName("rebuild_video_list")]
-        public static void Run(
+		public static void Run(
 			[TimerTrigger("0 0 * * * *")]TimerInfo myTimer,
 			[Blob("silvagunnerlist/items", FileAccess.Write)] Stream items,
 			ILogger log
 		)
-        {
+		{
 			try
 			{
 				List<string> items_list = GetVideos();
 				items.Write(Encoding.ASCII.GetBytes(String.Join('\n', items_list)));
 				log.LogInformation($"Updated the video list at {DateTime.Now}");
 			} catch (Exception e)
-            {
+			{
 				log.LogError($"Error updating the database:\n{e}");
-            }
-        }
-    }
+			}
+		}
+	}
 }

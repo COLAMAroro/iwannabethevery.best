@@ -16,23 +16,23 @@ using System.Linq;
 
 namespace SilvaGunnerPokemon
 {
-    class itemsclass
-    {
-        public List<string> items { get; set; }
-    };
+	class itemsclass
+	{
+		public List<string> items { get; set; }
+	};
 
-    public static class redirection
-    {
-        private static Random rng = new Random();
-        [FunctionName("redirection")]
-        public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-            [Blob("silvagunnerlist/items", FileAccess.Read)] Stream items,
-            ILogger log)
-        {
-            List<string> items_list = new StreamReader(items).ReadToEnd().Split('\n').ToList();
-            string random = items_list[rng.Next(items_list.Count)];
-            return new RedirectResult("https://www.youtube.com/watch?v=" + random, false, false);
-        }
-    }
+	public static class redirection
+	{
+		private static Random rng = new Random();
+		[FunctionName("redirection")]
+		public static IActionResult Run(
+			[HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+			[Blob("silvagunnerlist/items", FileAccess.Read)] Stream items,
+			ILogger log)
+		{
+			List<string> items_list = new StreamReader(items).ReadToEnd().Split('\n').ToList();
+			string random = items_list[rng.Next(items_list.Count)];
+			return new RedirectResult("https://www.youtube.com/watch?v=" + random, false, false);
+		}
+	}
 }
