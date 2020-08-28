@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Storage.Blobs;
 using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace SilvaGunnerPokemon
 {
@@ -25,14 +28,18 @@ namespace SilvaGunnerPokemon
 	{
 		private static Random rng = new Random();
 		[FunctionName("redirection")]
-		public static IActionResult Run(
+		public static HttpResponseMessage Run(
 			[HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
 			[Blob("silvagunnerlist/items", FileAccess.Read)] Stream items,
 			ILogger log)
 		{
 			List<string> items_list = new StreamReader(items).ReadToEnd().Split('\n').ToList();
 			string random = items_list[rng.Next(items_list.Count)];
-			return new RedirectResult("https://www.youtube.com/watch?v=" + random, false, false);
+			string html = $"<head><meta http-equiv=\"refresh\" content=\"0; URL = https://www.youtube.com/watch?v={random}\"/></head>";
+			var response = new HttpResponseMessage(HttpStatusCode.OK);
+			response.Content = new StringContent(html);
+			response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+			return response;
 		}
 	}
 }
