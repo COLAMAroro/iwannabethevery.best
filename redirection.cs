@@ -35,7 +35,11 @@ namespace SilvaGunnerPokemon
 		{
 			List<string> items_list = new StreamReader(items).ReadToEnd().Split('\n').ToList();
 			string random = items_list[rng.Next(items_list.Count)];
-			string html = $"<head><meta http-equiv=\"refresh\" content=\"0; URL = https://www.youtube.com/watch?v={random}\"/></head>";
+			string html = "<head>\n" + 
+				$"<meta http-equiv=\"refresh\" content=\"0; URL = https://www.youtube.com/watch?v={random}\"/>\n" +
+				"<meta description=\"High quality rips of Pokemon video games soundtracks\"/>\n" +
+				"<meta author=\"@COLAMAroro\"/>\n" +
+				"</head>";
 			var response = new HttpResponseMessage(HttpStatusCode.OK);
 			response.Content = new StringContent(html);
 			response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
