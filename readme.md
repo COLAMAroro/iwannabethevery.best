@@ -1,4 +1,11 @@
-﻿# I Wanna Be The Very.Best
+
+# Deprecation notice:
+
+This repo is deprecated. The app has been re-written in go, and is now hosted on [SourceHut](https://git.sr.ht/~colamaroro/iwannabethevery.best).
+
+---
+
+ # I Wanna Be The Very.Best
 
 Visit an awesome website
 
